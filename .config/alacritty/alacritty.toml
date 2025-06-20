@@ -1,0 +1,32 @@
+[window]
+opacity = 0.98
+startup_mode = "Maximized"
+padding = { x = 3, y = 3 }
+dynamic_padding = true
+
+[scrolling]
+history = 10000
+multiplier = 3
+
+[font]
+size = 11 
+normal = { family = "JetBrainsMono NFM", style = "Regular" }
+
+[selection]
+save_to_clipboard = true
+
+# snippet to test out font-family
+# #include <iostream>
+# #include <cstdint>
+# #include <type_traits>
+#
+# #include "some_manager.h"
+#
+# int main() {
+#     const auto* mgr = common::singleton<some_manager>::instance();
+#     mgr->initialize(values, values);
+#
+#     int32_t some_value = 6969;
+#     std::cout << std::is_arithmetic(some_value);
+#     return 0;
+# }
