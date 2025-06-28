@@ -166,7 +166,7 @@ function! OpenRelativeFile()
     execute 'e ' . swap
 endfunction
 
-function! OpenRelativeFileSp()
+function! OpenRelativeFileAnotherWindow()
     let swap = GetRelativeFile()
 
     if empty(swap)
@@ -174,7 +174,23 @@ function! OpenRelativeFileSp()
         return
     endif
 
-    execute 'vs ' . swap
+    if winnr('$') == 2
+        wincmd w
+        edit %
+        execute 'e ' . swap
+    else
+        execute 'vs ' . swap
+    endif
+endfunction
+
+function! NewFileAnotherWindow()
+    if winnr('$') == 2
+        wincmd w
+        enew
+    else
+        vs
+        enew
+    endif
 endfunction
 
 function! FindFileProject()
@@ -217,4 +233,5 @@ nnoremap <C-J> :call LiveGrep()<CR>
 nnoremap <C-K> :call FindFileProject()<CR>
 nnoremap <C-L> :call FindFilePS2SDK()<CR>
 nnoremap <S-Q> :call OpenRelativeFile()<CR>
-nnoremap <S-W> :call OpenRelativeFileSp()<CR>
+nnoremap <S-W> :call OpenRelativeFileAnotherWindow()<CR>
+nnoremap <S-E> :call NewFileAnotherWindow()<CR>
