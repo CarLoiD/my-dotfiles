@@ -37,6 +37,24 @@ set statusline+=\ %l:%c
 set statusline+=\ %p%%
 set statusline+=\ 
 
+if has("gui_running")
+    set noerrorbells
+    set novisualbell
+    set t_vb=
+    set belloff=all
+
+    winpos 0 0
+    set lines=999 columns=999
+
+    set guioptions-=T
+    set guioptions-=m
+    set guioptions-=r
+    set guioptions-=L
+
+    set guifont=FiraCode\ Nerd\ Font\ Mono\ 11
+    colorscheme retrobox
+endif
+
 autocmd FileType make setlocal noexpandtab
 
 augroup number_toggle
@@ -78,6 +96,24 @@ function! CMakeBuildRunPS2EmulatorImpl()
     execute "!clear && cmake --build build/ --target ps2_run_emulator"
 endfunction
 
+function! AnotherWindowCmd(cmd_if_two, cmd_if_one)
+    if winnr('$') == 2
+        wincmd w
+        execute a:cmd_if_two
+    else
+        execute a:cmd_if_one
+    endif
+endfunction
+
+function! OpenAnotherWindow()
+    if winnr('$') == 2
+        wincmd w
+    else
+        vs
+        enew
+    endif
+endfunction
+
 function! FindFile(dir)
     let fd_cmd  = 'find ' . a:dir . ' -type f -not -name "*.elf" '
     let fd_cmd .= '-not -path "./external/*" '
@@ -101,29 +137,6 @@ function! FindFile(dir)
 
     try
         execute 'edit ' . fnameescape(result[0])
-        redraw!
-    finally
-        call delete(temp)
-    endtry
-endfunction
-
-function! LiveGrep()
-    let temp = tempname()
-
-    execute 'silent !rg --line-number . | fzf > ' . fnameescape(temp)
-    while !filereadable(temp)
-        sleep 10m
-    endwhile
-
-    let result = readfile(temp)
-    if empty(result)
-        redraw!
-        return
-    endif
-
-    let sub = split(result[0], ":")
-    try
-        execute 'e +' . sub[1] . ' ' . fnameescape(sub[0])
         redraw!
     finally
         call delete(temp)
@@ -174,23 +187,34 @@ function! OpenRelativeFileAnotherWindow()
         return
     endif
 
-    if winnr('$') == 2
-        wincmd w
-        edit %
-        execute 'e ' . swap
-    else
-        execute 'vs ' . swap
-    endif
+    call AnotherWindowCmd('edit % | e ' . swap, 'vs ' . swap)
 endfunction
 
 function! NewFileAnotherWindow()
-    if winnr('$') == 2
-        wincmd w
-        enew
-    else
-        vs
-        enew
+    call AnotherWindowCmd('enew', 'vs | enew')
+endfunction
+
+function! LiveGrep()
+    let temp = tempname()
+
+    execute 'silent !rg --line-number . | fzf > ' . fnameescape(temp)
+    while !filereadable(temp)
+        sleep 10m
+    endwhile
+
+    let result = readfile(temp)
+    if empty(result)
+        redraw!
+        return
     endif
+
+    let sub = split(result[0], ":")
+    try
+        execute 'e +' . sub[1] . ' ' . fnameescape(sub[0])
+        redraw!
+    finally
+        call delete(temp)
+    endtry
 endfunction
 
 function! FindFileProject()
@@ -199,6 +223,16 @@ endfunction
 
 function! FindFilePS2SDK()
     call FindFile('$PS2SDK/ee/include $PS2SDK/iop/include $PS2SDK/common/include')
+endfunction
+
+function! LiveGrepAnotherWindow()
+    call OpenAnotherWindow()
+    call LiveGrep()
+endfunction
+
+function! FindFileProjectAnotherWindow()
+    call OpenAnotherWindow()
+    call FindFileProject()
 endfunction
 
 " #Commands
@@ -235,3 +269,6 @@ nnoremap <C-L> :call FindFilePS2SDK()<CR>
 nnoremap <S-Q> :call OpenRelativeFile()<CR>
 nnoremap <S-W> :call OpenRelativeFileAnotherWindow()<CR>
 nnoremap <S-E> :call NewFileAnotherWindow()<CR>
+
+nnoremap <C-U> :call LiveGrepAnotherWindow()<CR>
+nnoremap <C-I> :call FindFileProjectAnotherWindow()<CR>
