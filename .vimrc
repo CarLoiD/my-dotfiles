@@ -3,7 +3,7 @@
 syntax on
 
 set background=dark
-colorscheme retrobox 
+colorscheme zx 
 
 " Transparent background
 hi Normal ctermbg=NONE guibg=NONE
@@ -156,12 +156,12 @@ function! GetRelativeFile()
     if ext == 'cpp' || ext == 'c' || ext == 'inl'
         let swap = base . '.h'
     elseif ext == 'h'
-        if filereadable(base . '.c')
-            let swap = base . '.c'
+        if filereadable(base . '.cpp')
+            let swap = base . '.cpp'
         elseif filereadable(base . '.inl')
             let swap = base . '.inl'
         else
-            let swap = base . '.cpp'
+            let swap = base . '.c'
         endif
     endif
 
@@ -246,6 +246,9 @@ command! -nargs=0 CMakeBuildRunPS2Hardware call CMakeBuildRunPS2HardwareImpl()
 command! -nargs=0 CMakeBuildRunPS2Emulator call CMakeBuildRunPS2EmulatorImpl()
 
 " #Remaps
+
+" Fix WSL1 weird bug, stop starting in replace mode
+nnoremap <esc>^[ <esc>^[
 
 " Auto close scopes
 inoremap "<Tab> ""<left>
