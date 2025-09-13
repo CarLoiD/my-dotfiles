@@ -1,2 +1,2 @@
 # my-dotfiles
-Linux configuration profect including my personal dotfiles for alacritty, vim, zsh, etc.
+Linux configuration project including my usual dotfiles for alacritty, vim, etc.
