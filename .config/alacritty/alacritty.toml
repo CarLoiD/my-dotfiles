@@ -10,7 +10,7 @@ multiplier = 3
 
 [font]
 size = 11 
-normal = { family = "JetBrainsMono NFM", style = "Regular" }
+normal = { family = "Courier Prime", style = "Regular" }
 
 [selection]
 save_to_clipboard = true
