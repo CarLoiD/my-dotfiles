@@ -37,24 +37,6 @@ set statusline+=\ %l:%c
 set statusline+=\ %p%%
 set statusline+=\ 
 
-if has("gui_running")
-    set noerrorbells
-    set novisualbell
-    set t_vb=
-    set belloff=all
-
-    winpos 0 0
-    set lines=999 columns=999
-
-    set guioptions-=T
-    set guioptions-=m
-    set guioptions-=r
-    set guioptions-=L
-
-    set guifont=FiraCode\ Nerd\ Font\ Mono\ 11
-    colorscheme retrobox
-endif
-
 autocmd FileType make setlocal noexpandtab
 
 augroup number_toggle
@@ -70,30 +52,6 @@ function! GitAutoPushImpl()
         \ "date_time=$(date) &&"
         \ "message=\"$date_time -- $changes\" &&"
         \ "git add . && git commit -m \"$message\" && git push"
-endfunction
-
-function! CMakeConfigurePS2DebugImpl()
-    execute "!clear && rm -rf build/ &&"
-        \ "cmake . -B build/ -DCMAKE_BUILD_TYPE=Debug "
-        \ "-DPLATFORM=PS2 -DCMAKE_TOOLCHAIN_FILE=cmake/ee-toolchain.cmake"
-endfunction
-
-function! CMakeConfigurePS2ReleaseImpl()
-    execute "!clear && rm -rf build/ &&"
-        \ "cmake . -B build/ -DCMAKE_BUILD_TYPE=Release "
-        \ "-DPLATFORM=PS2 -DCMAKE_TOOLCHAIN_FILE=cmake/ee-toolchain.cmake"
-endfunction
-
-function! CMakeBuildImpl()
-    execute "!clear && cmake --build build/"
-endfunction
-
-function! CMakeBuildRunPS2HardwareImpl()
-    execute "!clear && cmake --build build/ --target ps2_run_hardware"
-endfunction
-
-function! CMakeBuildRunPS2EmulatorImpl()
-    execute "!clear && cmake --build build/ --target ps2_run_emulator"
 endfunction
 
 function! AnotherWindowCmd(cmd_if_two, cmd_if_one)
@@ -116,8 +74,9 @@ endfunction
 
 function! FindFile(dir)
     let fd_cmd  = 'find ' . a:dir . ' -type f -not -name "*.elf" '
-    let fd_cmd .= '-not -path "./external/*" '
-    let fd_cmd .= '-not -path "./build/*" ' 
+    let fd_cmd .= '-type f -not -name "*.d"'
+    let fd_cmd .= '-type f -not -name "*.o"'
+    let fd_cmd .= '-not -path "./obj/*" ' 
     let fd_cmd .= '-not -path "./.git/*" | '
 
     let sd_cmd = 'sed "s|^\./||"'
@@ -239,11 +198,6 @@ endfunction
 
 command! -nargs=1 GitPush !git add . && git commit -m <f-args> && git push
 command! -nargs=0 GitAutoPush call GitAutoPushImpl()
-command! -nargs=0 CMakeConfigurePS2Debug call CMakeConfigurePS2DebugImpl()
-command! -nargs=0 CMakeConfigurePS2Release call CMakeConfigurePS2ReleaseImpl()
-command! -nargs=0 CMakeBuild call CMakeBuildImpl()
-command! -nargs=0 CMakeBuildRunPS2Hardware call CMakeBuildRunPS2HardwareImpl()
-command! -nargs=0 CMakeBuildRunPS2Emulator call CMakeBuildRunPS2EmulatorImpl()
 
 " #Remaps
 
@@ -261,10 +215,11 @@ inoremap {<CR> {<CR>}<ESC>O
 inoremap {;<CR> {<CR>};<ESC>O
 
 " Misc targets 
-nnoremap <F6> :call CMakeBuildRunPS2HardwareImpl()<CR>
-nnoremap <F7> :call CMakeBuildRunPS2EmulatorImpl()<CR>
+nnoremap <F5> :!clear && make run<CR>
+nnoremap <F6> :!clear && make run_hardware<CR>
+nnoremap <F7> :!clear && make run_emulator<CR>
 nnoremap <F8> :!clear<CR>
-nnoremap <F9> :call CMakeConfigurePS2DebugImpl()<CR>
+nnoremap <F9> :!clear && make clean<CR>
 nnoremap <F10> :GitAutoPush<CR>
 nnoremap <C-J> :call LiveGrep()<CR>
 nnoremap <C-K> :call FindFileProject()<CR>
