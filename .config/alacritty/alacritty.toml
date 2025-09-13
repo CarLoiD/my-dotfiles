@@ -9,7 +9,7 @@ history = 10000
 multiplier = 3
 
 [font]
-size = 12 
+size = 11 
 normal = { family = "Google Sans Code", style = "Regular" }
 
 [selection]
