@@ -9,13 +9,13 @@ history = 10000
 multiplier = 3
 
 [font]
-size = 11 
-normal = { family = "Courier Prime", style = "Regular" }
+size = 12 
+normal = { family = "Google Sans Code", style = "Regular" }
 
 [selection]
 save_to_clipboard = true
 
-# snippet to test out font-family
+# Snippet to test out font-family
 # #include <iostream>
 # #include <cstdint>
 # #include <type_traits>
