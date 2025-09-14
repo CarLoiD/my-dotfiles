@@ -6,9 +6,9 @@ set background=dark
 colorscheme zx 
 
 " Transparent background
-hi Normal ctermbg=NONE guibg=NONE
-hi EndOfBuffer cterm=NONE guibg=NONE
-hi NonText cterm=NONE guibg=NONE
+" hi Normal ctermbg=NONE guibg=NONE
+" hi EndOfBuffer cterm=NONE guibg=NONE
+" hi NonText cterm=NONE guibg=NONE
 
 set smartindent
 set autoindent
