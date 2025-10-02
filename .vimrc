@@ -37,6 +37,9 @@ set statusline+=\ %l:%c
 set statusline+=\ %p%%
 set statusline+=\ 
 
+autocmd BufNewFile *.c,*.h,*.cpp,*.cc 0r ~/.vim/skeletons/apache2_0 | call s:License()
+autocmd BufNewFile CMakeLists.txt 0r ~/.vim/skeletons/apache2_0 | call s:License()
+
 autocmd FileType make setlocal noexpandtab
 
 augroup number_toggle
@@ -46,6 +49,20 @@ augroup number_toggle
 augroup END
 
 " #Functions
+
+function! s:License()
+    silent! %s/<year>/\=strftime("%Y")/g
+    silent! %s/<author>/Carlos Gurgel/g
+    silent! %s/<file>/\=expand("%:t")/g
+
+    if &filetype ==# 'c' || &filetype ==# 'cpp' || &filetype ==# 'cc' || &filetype ==# 'h'
+        silent! %s/<comment>/\/\//g
+    else
+        silent! %s/<comment>/#/g
+    endif
+
+    normal! G
+endfunction
 
 function! GitAutoPushImpl()
     execute "!changes=$(git diff --shortstat) &&"
@@ -228,5 +245,4 @@ nnoremap <S-Q> :call OpenRelativeFile()<CR>
 nnoremap <S-W> :call OpenRelativeFileAnotherWindow()<CR>
 nnoremap <S-E> :call NewFileAnotherWindow()<CR>
 
-nnoremap <C-U> :call LiveGrepAnotherWindow()<CR>
-nnoremap <C-I> :call FindFileProjectAnotherWindow()<CR>
+nnoremap <C-U> :call FindFileProjectAnotherWindow()<CR>
