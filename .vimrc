@@ -38,7 +38,7 @@ set statusline+=\ %p%%
 set statusline+=\ 
 
 autocmd BufNewFile *.c,*.h,*.cpp,*.cc 0r ~/.vim/skeletons/apache2_0 | call s:License()
-autocmd BufNewFile CMakeLists.txt *.cmake 0r ~/.vim/skeletons/apache2_0 | call s:License()
+autocmd BufNewFile CMakeLists.txt,*.cmake 0r ~/.vim/skeletons/apache2_0 | call s:License()
 
 autocmd FileType make setlocal noexpandtab
 
