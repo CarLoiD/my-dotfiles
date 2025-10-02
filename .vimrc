@@ -38,7 +38,7 @@ set statusline+=\ %p%%
 set statusline+=\ 
 
 autocmd BufNewFile *.c,*.h,*.cpp,*.cc 0r ~/.vim/skeletons/apache2_0 | call s:License()
-autocmd BufNewFile CMakeLists.txt 0r ~/.vim/skeletons/apache2_0 | call s:License()
+autocmd BufNewFile CMakeLists.txt *.cmake 0r ~/.vim/skeletons/apache2_0 | call s:License()
 
 autocmd FileType make setlocal noexpandtab
 
@@ -61,7 +61,23 @@ function! s:License()
         silent! %s/<comment>/#/g
     endif
 
+    " Go to the end of buffer
     normal! G
+
+    if expand("%:e") ==# "h"
+        " Insert header guards
+        " Replace non alpha-numeric to underline
+        let l:guard  = substitute(toupper(expand("%:r")), '[^A-Z0-9]', '_', 'g') 
+        let l:guard .= "_H_"
+
+        call append(line("$"), "#ifndef " . l:guard)
+        call append(line("$"), "#define " . l:guard)
+        call append(line("$"), "#endif // " . l:guard)
+
+        " Jump the end of buffer and append a line upwards
+        call cursor(line("$"), 1)
+        normal! O
+    endif
 endfunction
 
 function! GitAutoPushImpl()
