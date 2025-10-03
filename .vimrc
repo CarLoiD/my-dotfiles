@@ -37,9 +37,7 @@ set statusline+=\ %l:%c
 set statusline+=\ %p%%
 set statusline+=\ 
 
-autocmd BufNewFile *.c,*.h,*.cpp,*.cc 0r ~/.vim/skeletons/apache2_0 | call s:License()
-autocmd BufNewFile CMakeLists.txt,*.cmake 0r ~/.vim/skeletons/apache2_0 | call s:License()
-
+autocmd BufNewFile *.c,*.h,*.hpp,*.cpp,*.cc,*.cmake,CMakeLists.txt call s:License()
 autocmd FileType make setlocal noexpandtab
 
 augroup number_toggle
@@ -51,11 +49,13 @@ augroup END
 " #Functions
 
 function! s:License()
+    silent! 0r ~/.vim/skeletons/apache2_0
+
     silent! %s/<year>/\=strftime("%Y")/g
     silent! %s/<author>/Carlos Gurgel/g
     silent! %s/<file>/\=expand("%:t")/g
 
-    if &filetype ==# 'c' || &filetype ==# 'cpp' || &filetype ==# 'cc' || &filetype ==# 'h'
+    if &filetype ==# 'c' || &filetype ==# 'cpp' || &filetype ==# 'cc' || &filetype ==# 'h' || &filetype ==# 'hpp'
         silent! %s/<comment>/\/\//g
     else
         silent! %s/<comment>/#/g
@@ -63,12 +63,22 @@ function! s:License()
 
     " Go to the end of buffer
     normal! G
+    
+    let l:ext = expand("%:e")
+    let l:is_header = (l:ext ==# "h") || (l:ext ==# "hpp")
 
-    if expand("%:e") ==# "h"
+    let l:guard_h = ""
+    if l:ext ==# "h"
+        let l:guard_h = "_H_"
+    elseif l:ext ==# "hpp"
+        let l:guard_h = "_HPP_"
+    endif
+
+    if l:is_header
         " Insert header guards
         " Replace non alpha-numeric to underline
         let l:guard  = substitute(toupper(expand("%:r")), '[^A-Z0-9]', '_', 'g') 
-        let l:guard .= "_H_"
+        let l:guard .= l:guard_h
 
         call append(line("$"), "#ifndef " . l:guard)
         call append(line("$"), "#define " . l:guard)
