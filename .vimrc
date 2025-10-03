@@ -79,10 +79,11 @@ function! s:License()
         " Replace non alpha-numeric to underline
         let l:guard  = substitute(toupper(expand("%:r")), '[^A-Z0-9]', '_', 'g') 
         let l:guard .= l:guard_h
+        let l:fguard = substitute(l:guard, '^SRC_', '', '')
 
-        call append(line("$"), "#ifndef " . l:guard)
-        call append(line("$"), "#define " . l:guard)
-        call append(line("$"), "#endif // " . l:guard)
+        call append(line("$"), "#ifndef " . l:fguard)
+        call append(line("$"), "#define " . l:fguard)
+        call append(line("$"), "#endif // " . l:fguard)
 
         " Jump the end of buffer and append a line upwards
         call cursor(line("$"), 1)
