@@ -111,7 +111,7 @@ function! GitAutoPushImpl()
 endfunction
 
 function! AnotherWindowCmd(cmd_if_two, cmd_if_one)
-    if winnr('$') == 2
+    if winnr('$') >= 2
         wincmd w
         execute a:cmd_if_two
     else
@@ -120,7 +120,7 @@ function! AnotherWindowCmd(cmd_if_two, cmd_if_one)
 endfunction
 
 function! OpenAnotherWindow()
-    if winnr('$') == 2
+    if winnr('$') >= 2
         wincmd w
     else
         vs
@@ -169,15 +169,19 @@ function! GetRelativeFile()
         return swap
     endif
     
-    if ext == 'cpp' || ext == 'c' || ext == 'inl'
+    if ext == 'cpp' || ext == 'cc' || ext == 'inl'
+        let swap = base . '.hpp'
+    elseif ext == 'c'
         let swap = base . '.h'
     elseif ext == 'h'
-        if filereadable(base . '.cpp')
+        let swap = base . '.c'
+    elseif ext == 'hpp'
+        if filereadable(base . '.cc')
+            let swap = base . '.cc'
+        elseif filereadable(base . '.cpp')
             let swap = base . '.cpp'
         elseif filereadable(base . '.inl')
             let swap = base . '.inl'
-        else
-            let swap = base . '.c'
         endif
     endif
 
@@ -204,6 +208,17 @@ function! OpenRelativeFileAnotherWindow()
     endif
 
     call AnotherWindowCmd('edit % | e ' . swap, 'vs ' . swap)
+endfunction
+
+function! OpenRelativeFileSplit()
+    let swap = GetRelativeFile()
+
+    if empty(swap)
+        echo 'Current file is not a C or C++ header/source file'
+        return
+    endif
+
+    execute 'sp ' . swap
 endfunction
 
 function! NewFileAnotherWindow()
@@ -282,6 +297,7 @@ nnoremap <C-K> :call FindFileProject()<CR>
 nnoremap <C-L> :call FindFilePS2SDK()<CR>
 nnoremap <S-Q> :call OpenRelativeFile()<CR>
 nnoremap <S-W> :call OpenRelativeFileAnotherWindow()<CR>
-nnoremap <S-E> :call NewFileAnotherWindow()<CR>
+nnoremap <S-E> :call OpenRelativeFileSplit()<CR>
+nnoremap <C-N> :call NewFileAnotherWindow()<CR>
 
 nnoremap <C-U> :call FindFileProjectAnotherWindow()<CR>
