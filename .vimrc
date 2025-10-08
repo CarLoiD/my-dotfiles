@@ -176,12 +176,12 @@ function! GetRelativeFile()
     elseif ext == 'h'
         let swap = base . '.c'
     elseif ext == 'hpp'
-        if filereadable(base . '.cc')
-            let swap = base . '.cc'
-        elseif filereadable(base . '.cpp')
+        if filereadable(base . '.cpp')
             let swap = base . '.cpp'
         elseif filereadable(base . '.inl')
             let swap = base . '.inl'
+        else
+            let swap = base . '.cc'
         endif
     endif
 
