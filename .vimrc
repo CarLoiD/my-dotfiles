@@ -37,6 +37,18 @@ set statusline+=\ %l:%c
 set statusline+=\ %p%%
 set statusline+=\ 
 
+let g:cpp_function_highlight = 0
+let g:cpp_attributes_highlight = 1
+
+" Highlight struct/class member variables (affects both C and C++ files)
+let g:cpp_member_highlight = 1
+
+" Highlight operators (affects both C and C++ files)
+let g:cpp_operator_highlight = 1
+
+" Put all standard C and C++ keywords under Vim's highlight group 'Statement'
+let g:cpp_simple_highlight = 0
+
 autocmd BufNewFile *.c,*.h,*.hpp,*.cpp,*.cc,*.cmake,CMakeLists.txt call s:License()
 autocmd FileType make setlocal noexpandtab
 
