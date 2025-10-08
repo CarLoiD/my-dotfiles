@@ -122,7 +122,7 @@ function! FindFile(dir)
     let fd_cmd .= '-type f -not -name "*.d" '
     let fd_cmd .= '-not -path "./obj/*" ' 
     let fd_cmd .= '-not -path "./build/*" ' 
-    let fd_cmd .= '-not -path "./.git/*" | '
+    let fd_cmd .= '-not -path "./.git/*" | tac | '
 
     let sd_cmd = 'sed "s|^\./||"'
     let cmd = fd_cmd . sd_cmd
