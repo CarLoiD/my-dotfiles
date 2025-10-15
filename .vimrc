@@ -287,10 +287,10 @@ inoremap {<CR> {<CR>}<ESC>O
 inoremap {;<CR> {<CR>};<ESC>O
 
 " Misc targets 
-nnoremap <F5> :!clear && cmake.exe --build build/ --target run<CR>
+nnoremap <F5> :!clear && cmake --build build/ --target run<CR>
 nnoremap <F6> :!clear && make run_hardware<CR>
 nnoremap <F7> :!clear && make run_emulator<CR>
-nnoremap <F9> :!clear && rm -rf build/ && cmake.exe -B build/ -G "Ninja"<CR>
+nnoremap <F9> :!clear && rm -rf build/ && cmake -B build/ -G "Ninja"<CR>
 nnoremap <F10> :GitAutoPush<CR>
 nnoremap <C-J> :call LiveGrep()<CR>
 nnoremap <C-K> :call FindFileProject()<CR>
