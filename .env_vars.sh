@@ -1,4 +1,4 @@
-alias ll='ls -alF --group-directories-first'
+alias ll='ls -alF --group-directories-first --color=yes'
 
 export PS2DEV="/usr/local/ps2dev"
 export PS2SDK="$PS2DEV/ps2sdk"
