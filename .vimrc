@@ -54,8 +54,14 @@ autocmd FileType make setlocal noexpandtab
 
 augroup number_toggle
     autocmd!
-    autocmd BufEnter,FocusGained,WinEnter * if &nu && mode() != "i" | set rnu   | endif
-    autocmd BufLeave,FocusLost,WinLeave   * if &nu                  | set nornu | endif
+    autocmd BufEnter,FocusGained,WinEnter * set rnu
+    autocmd BufLeave,FocusLost,WinLeave   * set nornu
+augroup END
+
+augroup cursorline_toggle
+    autocmd!
+    autocmd BufEnter,FocusGained,WinEnter * set cursorline
+    autocmd BufLeave,FocusLost,WinLeave   * set nocursorline
 augroup END
 
 " #Functions
