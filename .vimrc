@@ -136,6 +136,7 @@ endfunction
 
 function! FindFile(dir)
     let fd_cmd  = 'find ' . a:dir . ' -type f \( '
+    let fd_cmd .= '-iname "*.txt" -o '
     let fd_cmd .= '-iname "*.h" -o '
     let fd_cmd .= '-iname "*.hpp" -o '
     let fd_cmd .= '-iname "*.c" -o '
