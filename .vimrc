@@ -54,8 +54,14 @@ autocmd FileType make setlocal noexpandtab
 
 augroup number_toggle
     autocmd!
-    autocmd BufEnter,FocusGained,WinEnter * if &nu && mode() != "i" | set rnu   | endif
-    autocmd BufLeave,FocusLost,WinLeave   * if &nu                  | set nornu | endif
+    autocmd BufEnter,FocusGained,WinEnter * set rnu
+    autocmd BufLeave,FocusLost,WinLeave   * set nornu
+augroup END
+
+augroup cursorline_toggle
+    autocmd!
+    autocmd BufEnter,FocusGained,WinEnter * set cursorline
+    autocmd BufLeave,FocusLost,WinLeave   * set nocursorline
 augroup END
 
 " #Functions
@@ -291,10 +297,10 @@ inoremap {<CR> {<CR>}<ESC>O
 inoremap {;<CR> {<CR>};<ESC>O
 
 " Misc targets 
-nnoremap <F5> :!clear && cmake --build build/ --target run<CR>
+nnoremap <F5> :!clear && make run<CR>
 nnoremap <F6> :!clear && make run_hardware<CR>
 nnoremap <F7> :!clear && make run_emulator<CR>
-nnoremap <F9> :!clear && rm -rf build/ && cmake -B build/ -G "Ninja"<CR>
+nnoremap <F9> :!clear && make clean<CR>
 nnoremap <F10> :GitAutoPush<CR>
 nnoremap <C-J> :call LiveGrep()<CR>
 nnoremap <C-K> :call FindFileProject()<CR>
