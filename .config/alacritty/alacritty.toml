@@ -9,8 +9,8 @@ history = 10000
 multiplier = 3
 
 [font]
-size = 14 
-normal = { family = "Google Sans Code", style = "Regular" }
+size = 11
+normal = { family = "Consolas", style = "Regular" }
 bold = { style = "Regular" }
 
 [selection]
@@ -24,7 +24,7 @@ save_to_clipboard = true
 # #include "some_manager.h"
 #
 # int main() {
-#     const auto* mgr = common::singleton<some_manager>::instance();
+#     const auto* mgr = base::Singleton<SomeManager>::instance();
 #     mgr->initialize(values, values);
 #
 #     int32_t some_value = 6969;

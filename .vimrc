@@ -129,19 +129,22 @@ function! OpenAnotherWindow()
 endfunction
 
 function! FindFile(dir)
-    let fd_cmd  = 'find ' . a:dir . ' -type f -not -name "*.elf" '
-    let fd_cmd .= '-type f -not -name "*.o" '
-    let fd_cmd .= '-type f -not -name "*.d" '
-    let fd_cmd .= '-not -path "./build/*" ' 
-    let fd_cmd .= '-not -path "./bin/*" ' 
-    let fd_cmd .= '-not -path "./lib/*" ' 
-    let fd_cmd .= '-not -path "./.git/*" | tac | '
+    let fd_cmd  = 'find ' . a:dir . ' -type f \( '
+    let fd_cmd .= '-iname "*.h" -o '
+    let fd_cmd .= '-iname "*.hpp" -o '
+    let fd_cmd .= '-iname "*.c" -o '
+    let fd_cmd .= '-iname "*.cpp" -o '
+    let fd_cmd .= '-iname "*.cc" -o '
+    let fd_cmd .= '-iname "*.s" -o '
+    let fd_cmd .= '-iname "*.mvu" -o '
+    let fd_cmd .= '-iname "*.mk" -o '
+    let fd_cmd .= '-iname "*.sh" -o '
+    let fd_cmd .= '-iname "makefile" '
+    let fd_cmd .= '\) | tac |'
 
-    let sd_cmd = 'sed "s|^\./||"'
-    let cmd = fd_cmd . sd_cmd
-
+    let cmd = fd_cmd
     let temp = tempname()
-    execute 'silent !' . cmd . ' | fzf --preview "cat {}" > ' . fnameescape(temp)
+    execute 'silent !' . cmd . ' fzf --preview "cat {}" > ' . fnameescape(temp)
     while !filereadable(temp)
         sleep 10m
     endwhile
