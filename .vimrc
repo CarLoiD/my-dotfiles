@@ -49,7 +49,6 @@ let g:cpp_operator_highlight = 1
 " Put all standard C and C++ keywords under Vim's highlight group 'Statement'
 let g:cpp_simple_highlight = 0
 
-autocmd BufNewFile *.c,*.h,*.hpp,*.cpp,*.cc,*.cmake,CMakeLists.txt call s:License()
 autocmd FileType make setlocal noexpandtab
 
 augroup number_toggle
@@ -66,54 +65,11 @@ augroup END
 
 " #Functions
 
-function! s:License()
-    silent! 0r ~/.vim/skeletons/apache2_0
-
-    silent! %s/<year>/\=strftime("%Y")/g
-    silent! %s/<author>/Carlos Gurgel/g
-    silent! %s/<file>/\=expand("%:t")/g
-
-    if &filetype ==# 'c' || &filetype ==# 'cpp' || &filetype ==# 'cc' || &filetype ==# 'h' || &filetype ==# 'hpp'
-        silent! %s/<comment>/\/\//g
-    else
-        silent! %s/<comment>/#/g
-    endif
-
-    " Go to the end of buffer
-    normal! G
-    
-    let l:ext = expand("%:e")
-    let l:is_header = (l:ext ==# "h") || (l:ext ==# "hpp")
-
-    let l:guard_h = ""
-    if l:ext ==# "h"
-        let l:guard_h = "_H_"
-    elseif l:ext ==# "hpp"
-        let l:guard_h = "_HPP_"
-    endif
-
-    if l:is_header
-        " Insert header guards
-        " Replace non alpha-numeric to underline
-        let l:guard  = substitute(toupper(expand("%:r")), '[^A-Z0-9]', '_', 'g') 
-        let l:guard .= l:guard_h
-        let l:fguard = substitute(l:guard, '^SRC_', '', '')
-
-        call append(line("$"), "#ifndef " . l:fguard)
-        call append(line("$"), "#define " . l:fguard)
-        call append(line("$"), "#endif // " . l:fguard)
-
-        " Jump the end of buffer and append a line upwards
-        call cursor(line("$"), 1)
-        normal! O
-    endif
-endfunction
-
 function! GitAutoPushImpl()
     execute "!changes=$(git diff --shortstat) &&"
-        \ "date_time=$(date) &&"
-        \ "message=\"$date_time -- $changes\" &&"
-        \ "git add . && git commit -m \"$message\" && git push"
+        \   "date_time=$(date) &&"
+        \   "message=\"$date_time -- $changes\" &&"
+        \   "git add . && git commit -m \"$message\" && git push"
 endfunction
 
 function! AnotherWindowCmd(cmd_if_two, cmd_if_one)
