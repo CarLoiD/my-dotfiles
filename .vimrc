@@ -102,6 +102,12 @@ function! FindFile(dir)
     let fd_cmd .= '-iname "*.mvu" -o '
     let fd_cmd .= '-iname "*.mk" -o '
     let fd_cmd .= '-iname "*.sh" -o '
+    let fd_cmd .= '-iname "*.cs" -o '
+    let fd_cmd .= '-iname "*.html" -o '
+    let fd_cmd .= '-iname "*.css" -o '
+    let fd_cmd .= '-iname "*.js" -o '
+    let fd_cmd .= '-iname "*.ts" -o '
+    let fd_cmd .= '-iname "*.dart" -o '
     let fd_cmd .= '-iname "makefile" '
     let fd_cmd .= '\) | tac |'
 
