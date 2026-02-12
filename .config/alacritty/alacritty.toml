@@ -9,8 +9,8 @@ history = 10000
 multiplier = 3
 
 [font]
-size = 11
-normal = { family = "Consolas", style = "Regular" }
+size = 12
+normal = { family = "Google Sans Code", style = "Regular" }
 bold = { style = "Regular" }
 
 [selection]
