@@ -14,19 +14,19 @@ endif
 let g:colors_name = 'zx'
 
 let s:fg0light  = { "gui": "#4C5648" } " Normal text a little lighter
-let s:fg0       = { "gui": "#D3B48C" } " Normal text #D1B897
+let s:fg0       = { "gui": "#C9B593" } " Normal text #D1B897
 let s:fg1       = { "gui": "#E1E1E1" } " White text
 let s:fg2       = { "gui": "#8DEEB4" } " Green for types
 let s:bg0       = { "gui": "#062626" } " Background #062329
 let s:select    = { "gui": "#115F6F" } " Visual mode selection
-let s:comment   = { "gui": "#44C340" } " Comments
-let s:string    = { "gui": "#2EC09C" } " Strings
-let s:number    = { "gui": "#7AD0C6" } " Numbers
+let s:comment   = { "gui": "#58D647" } " Comments
+let s:string    = { "gui": "#51CBB9" } " Strings
+let s:number    = { "gui": "#88F0CD" } " Numbers
 let s:menuBg    = { "gui": "#3A3A3A" } " Popup menu background
 let s:menuIBg   = { "gui": "#2D2D2D" } " Popup menu selected item background
 let s:functions = { "gui": "#FFFFFF" } " Functions
-let s:macros    = { "gui": "#8CDE94" } " Preprocessor Macros
-let s:types     = { "gui": "#7AD0C6" } " Types
+let s:macros    = { "gui": "#97EA9E" } " Preprocessor Macros
+let s:types     = { "gui": "#A2F4A8" } " Types
 let s:curLine   = { "gui": "#163339" } " Current line at the cursor 
 let s:dark      = { "gui": "#000000" } " Transparent 
 let s:slbg0     = { "gui": "#0B414B" } " Status line (mode) background #0B414B
@@ -59,7 +59,7 @@ call s:h("PreCondit",      { "fg": s:fg1 })
 call s:h("Keyword",        { "fg": s:fg1 })
 call s:h("Structure",      { "fg": s:fg2 })
 call s:h("Typedef",        { "fg": s:fg2 })
-call s:h("Type",           { "fg": s:macros })
+call s:h("Type",           { "fg": s:types })
 call s:h("Label",          { "fg": s:fg1 })
 call s:h("Boolean",        { "fg": s:number })
 call s:h("StorageClass",   { "fg": s:fg1 })

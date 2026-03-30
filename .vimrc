@@ -57,12 +57,6 @@ augroup number_toggle
     autocmd BufLeave,FocusLost,WinLeave   * set nornu
 augroup END
 
-augroup cursorline_toggle
-    autocmd!
-    autocmd BufEnter,FocusGained,WinEnter * set cursorline
-    autocmd BufLeave,FocusLost,WinLeave   * set nocursorline
-augroup END
-
 " #Functions
 
 function! GitAutoPushImpl()
