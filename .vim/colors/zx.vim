@@ -14,10 +14,10 @@ endif
 let g:colors_name = 'zx'
 
 let s:fg0light  = { "gui": "#4C5648" } " Normal text a little lighter
-let s:fg0       = { "gui": "#D1B897" } " Normal text
+let s:fg0       = { "gui": "#D3B48C" } " Normal text #D1B897
 let s:fg1       = { "gui": "#E1E1E1" } " White text
 let s:fg2       = { "gui": "#8DEEB4" } " Green for types
-let s:bg0       = { "gui": "#062329" } " Background #062329
+let s:bg0       = { "gui": "#062626" } " Background #062329
 let s:select    = { "gui": "#115F6F" } " Visual mode selection
 let s:comment   = { "gui": "#44C340" } " Comments
 let s:string    = { "gui": "#2EC09C" } " Strings
@@ -29,8 +29,9 @@ let s:macros    = { "gui": "#8CDE94" } " Preprocessor Macros
 let s:types     = { "gui": "#7AD0C6" } " Types
 let s:curLine   = { "gui": "#163339" } " Current line at the cursor 
 let s:dark      = { "gui": "#000000" } " Transparent 
-let s:slbg0     = { "gui": "#0B414B" } " Status line (mode) background 
-let s:slbg1     = { "gui": "#0F5966" } " Status line (file) background
+let s:slbg0     = { "gui": "#0B414B" } " Status line (mode) background #0B414B
+let s:slbg1     = { "gui": "#D3B48C" } " Status line (file) background #0F5966
+let s:slfg      = { "gui": "#062626" } " Status line (file) foreground
 
 function! s:h(group, style)
    execute "hi!" a:group
@@ -80,7 +81,7 @@ call s:h("WildMenu",       { "bg": s:slbg0, "fg": s:fg1 })
 call s:h("StatusLine",     { "fg": s:slbg1, "bg": s:fg1 })
 call s:h("StatusLineNC",   { "fg": s:slbg1, "bg": s:bg0 })
 call s:h("User2",          { "bg": s:slbg0, "fg": s:fg1 })
-call s:h("User1",          { "bg": s:slbg1, "fg": s:fg1 })
+call s:h("User1",          { "bg": s:slbg1, "fg": s:slfg })
 
 " Fix cursor line
 hi CursorLine   cterm=NONE ctermbg=darkred ctermfg=white
