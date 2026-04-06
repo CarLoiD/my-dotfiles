@@ -85,7 +85,7 @@ function! OpenAnotherWindow()
 endfunction
 
 function! FindFile(dir)
-    let fd_cmd = 'rg --files | tac |'
+    let fd_cmd = 'rg --files --sort path | tac |'
 
     let cmd = fd_cmd
     let temp = tempname()
