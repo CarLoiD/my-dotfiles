@@ -85,27 +85,7 @@ function! OpenAnotherWindow()
 endfunction
 
 function! FindFile(dir)
-    let fd_cmd  = 'find ' . a:dir . ' -type f \( '
-    let fd_cmd .= '-iname "*.txt" -o '
-    let fd_cmd .= '-iname "*.h" -o '
-    let fd_cmd .= '-iname "*.hpp" -o '
-    let fd_cmd .= '-iname "*.c" -o '
-    let fd_cmd .= '-iname "*.cpp" -o '
-    let fd_cmd .= '-iname "*.cc" -o '
-    let fd_cmd .= '-iname "*.inl" -o '
-    let fd_cmd .= '-iname "*.s" -o '
-    let fd_cmd .= '-iname "*.vsm" -o '
-    let fd_cmd .= '-iname "*.dsm" -o '
-    let fd_cmd .= '-iname "*.mk" -o '
-    let fd_cmd .= '-iname "*.sh" -o '
-    let fd_cmd .= '-iname "*.cs" -o '
-    let fd_cmd .= '-iname "*.html" -o '
-    let fd_cmd .= '-iname "*.css" -o '
-    let fd_cmd .= '-iname "*.js" -o '
-    let fd_cmd .= '-iname "*.ts" -o '
-    let fd_cmd .= '-iname "*.dart" -o '
-    let fd_cmd .= '-iname "makefile" '
-    let fd_cmd .= '\) | tac |'
+    let fd_cmd = 'rg --files | tac |'
 
     let cmd = fd_cmd
     let temp = tempname()
