@@ -1,9 +1,9 @@
 " #Editor settings
 
-syntax on
+syntax off 
 
 set background=dark
-colorscheme zx 
+colorscheme lunaperche
 
 " Transparent background
 " hi Normal ctermbg=NONE guibg=NONE
