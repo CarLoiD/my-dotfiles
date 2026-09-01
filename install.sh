@@ -3,9 +3,11 @@ cp -r .vim/ ~/
 cp -r .config/ ~/
 cp -r .smb/ ~/
 
-# Vim init file
+# HOME items
 cp .vimrc ~/
 cp .env_vars.sh ~/
+cp .Xresources ~/
+cp base16-default-dark-256.Xresources ~/
 
 # Append the source to the custom environment variables, if not present already
 BASHRC_APPEND="source ~/.env_vars.sh"
