@@ -43,6 +43,13 @@ set statusline+=\ %l:%c
 set statusline+=\ %p%%
 set statusline+=\ 
 
+augroup c_margin
+        autocmd!
+        autocmd Filetype c,cpp setlocal colorcolumn=80
+        highlight OverLen ctermbg=darkred ctermfg=white guibg=#592929
+        match OverLen /\%81v.\+/
+augroup END
+
 augroup c_style
         autocmd!
         autocmd FileType c,cpp,make setlocal tabstop=8 shiftwidth=8 softtabstop=8 noexpandtab
