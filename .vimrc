@@ -10,15 +10,21 @@ colorscheme lunaperche
 " hi EndOfBuffer cterm=NONE guibg=NONE
 " hi NonText cterm=NONE guibg=NONE
 
-set smartindent
+" Indentation options
+filetype plugin indent on
+set cindent
+set formatoptions+=ro
+set cinoptions={0,(0,m1,c0
+
+set nosmartindent
 set autoindent
 set expandtab 
 set smarttab
 set number relativenumber
 set splitright
 set splitbelow
-set tabstop=4
-set shiftwidth=4
+set tabstop=8
+set shiftwidth=8
 
 " Do not create any swap files
 set noswapfile
@@ -37,24 +43,20 @@ set statusline+=\ %l:%c
 set statusline+=\ %p%%
 set statusline+=\ 
 
-let g:cpp_function_highlight = 0
-let g:cpp_attributes_highlight = 1
+augroup c_style
+        autocmd!
+        autocmd FileType c,cpp,make setlocal tabstop=8 shiftwidth=8 softtabstop=8 noexpandtab
+augroup END
 
-" Highlight struct/class member variables (affects both C and C++ files)
-let g:cpp_member_highlight = 1
-
-" Highlight operators (affects both C and C++ files)
-let g:cpp_operator_highlight = 1
-
-" Put all standard C and C++ keywords under Vim's highlight group 'Statement'
-let g:cpp_simple_highlight = 0
-
-autocmd FileType make setlocal noexpandtab
+augroup c_comments
+        autocmd!
+        autocmd FileType c,cpp setlocal comments=s1:/*,m:\ *,ex:\ */
+augroup END
 
 augroup number_toggle
-    autocmd!
-    autocmd BufEnter,FocusGained,WinEnter * set rnu
-    autocmd BufLeave,FocusLost,WinLeave   * set nornu
+        autocmd!
+        autocmd BufEnter,FocusGained,WinEnter * set rnu
+        autocmd BufLeave,FocusLost,WinLeave   * set nornu
 augroup END
 
 " #Functions
