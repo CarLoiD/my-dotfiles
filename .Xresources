@@ -1,7 +1,7 @@
 #include "base16-default-dark-256.Xresources"
 
 xterm*renderFont: true
-xterm*facename: Consolas:style=Regular
+xterm*faceName: Consolas:style=Regular
 xterm*faceSize: 16
 xterm*faceNameDoubleSize: false
 xterm*antialias: true 
