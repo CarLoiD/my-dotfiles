@@ -5,3 +5,5 @@ xterm*faceName: Consolas:style=Regular
 xterm*faceSize: 16
 xterm*faceNameDoubleSize: false
 xterm*antialias: true 
+
+XTerm*selectToClipboard: true
